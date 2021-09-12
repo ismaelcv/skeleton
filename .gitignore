@@ -9,6 +9,9 @@ venv
 data
 notebooks
 .idea
+example_repos/
+
+desktop.ini
 
 # User-specific stuff
 .idea/**/workspace.xml

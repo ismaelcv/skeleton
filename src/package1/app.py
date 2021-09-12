@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+# from fastapi import FastAPI
+
 # from json import dumps
 # from enum import Enum
 # from typing import Optional, List
@@ -8,41 +9,38 @@ from fastapi import FastAPI
 # from redis import ConnectionPool, Redis
 # import os
 
-def create_app(*args):
-    app = FastAPI()
 
-    @app.get('/', status_code=201)
-    def welcome():
-        return "Hello World!"
+# def create_app(*args):
+#     app = FastAPI()
 
-    @app.get('/ping', status_code=200)
-    def ping():
-        return "Alles Goed!"
+#     @app.get("/", status_code=201)
+#     def welcome():
+#         return "Hello World!"
 
+#     @app.get("/ping", status_code=200)
+#     def ping():
+#         return "Alles Goed!"
 
-    return app
+# return app
 
-
-    #
-    # @app.post('/names/{name}', status_code=201)
-    # def post_name(name: str, redis=Depends(get_redis)):
-    #     redis.sadd(REDIS_NAMES_KEY, name)
-    #     return "OK!"
-    #
-    #
-    # @app.get('/names')
-    # def get_names(redis=Depends(get_redis)):
-    #     return redis.smembers(REDIS_NAMES_KEY)
-    #
-    #
-    # @app.get('/names/{name}')
-    # def get_name(name, redis=Depends(get_redis)):
-    #     if not redis.sismember(REDIS_NAMES_KEY, name):
-    #         raise HTTPException(404)
-    #
-    #     return f"hello {name}!"
-
-
+#
+# @app.post('/names/{name}', status_code=201)
+# def post_name(name: str, redis=Depends(get_redis)):
+#     redis.sadd(REDIS_NAMES_KEY, name)
+#     return "OK!"
+#
+#
+# @app.get('/names')
+# def get_names(redis=Depends(get_redis)):
+#     return redis.smembers(REDIS_NAMES_KEY)
+#
+#
+# @app.get('/names/{name}')
+# def get_name(name, redis=Depends(get_redis)):
+#     if not redis.sismember(REDIS_NAMES_KEY, name):
+#         raise HTTPException(404)
+#
+#     return f"hello {name}!"
 
 
 # HTTP Methods
