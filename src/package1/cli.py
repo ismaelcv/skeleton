@@ -21,7 +21,7 @@ def greet(name: str, language: str) -> None:
     :return:
     """
 
-    if language == "es":
+    if language == "et":
         print(f"Hola  {name}")
     else:
         print(f"Hello  {name}")
