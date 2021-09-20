@@ -18,3 +18,4 @@ starlette==0.13.6
     # via fastapi
 uvicorn==0.13.3
     # via skeleton (setup.py)
+jupyterlab

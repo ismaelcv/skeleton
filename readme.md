@@ -1,18 +1,17 @@
-## ✅&nbsp; Installation Requirements -
+## ✅&nbsp; Installation Requirements
 
-STEP 1: **Environment**
+STEP 1: **Cone the skeleton repo**
+`git clone git@github.com:ismaelcv/skeleton.git`
 
-- Once the project has been cloned we need to create an environment with the following commands:
-  `conda create --name skeleton python=3.7`
-  `source activate-env`
-  Note:The yml configuration file has already been included in the project
-- Update conda with `make update-conda`
-- Create a new enviroment with `make create-env`
-- Activate the prolomeister environment in the kernel running `make activate-env`
+STEP 2: **Set up a virtual environment**
+
+a) Install vitualenv: `sudo pip3 install virtualenv`
+b) create a virtual environment: `virtualenv venv`
+c) Activate the virtual environment: `source venv/bin/activate`
 
 STEP 2: **Skeleton!!!**
 
-- Run `pip install -e .[dev]` to convert our code into a formal python package
+- Run `pip install -e .'[dev]'` to convert our code into a formal python package
 - Run `pip install -r requirements-no-deps.txt --no-deps` to install additional requirements
 - if you run `pip list` prolomeister should appear in the list
 

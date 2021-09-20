@@ -10,7 +10,7 @@ base_dependencies = [
 
 additional_dependencies = {
     "dev": [
-        "black>=20",
+        "black>=21.9b0",
         "pre-commit>=2.15.0",
         "pytest>=6.2.1",
         "pylint>=2.7.4",
