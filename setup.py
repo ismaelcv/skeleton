@@ -23,9 +23,11 @@ additional_dependencies = {
 
 setup(
     name="skeleton",
-    packages=find_packages("src"),
+    packages=find_packages(where="src"),
     package_dir={"": "src"},
+    description=("Online sales project"),
     author="Ismael Cabral",
+    version="0.0.12",
     install_requires=base_dependencies,
     extras_require=additional_dependencies,
     entry_points={"console_scripts": ["skeleton = package1.cli:main"]},

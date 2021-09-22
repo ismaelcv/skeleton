@@ -8,39 +8,22 @@ STEP 2: **Set up a virtual environment**
 a) Install vitualenv: `sudo pip3 install virtualenv`
 b) create a virtual environment: `virtualenv venv`
 c) Activate the virtual environment: `source venv/bin/activate`
+d) make it availabke in jupyter: `python -m ipykernel install --user --name=venv`
+
 
 STEP 2: **Skeleton!!!**
 
 - Run `pip install -e .'[dev]'` to convert our code into a formal python package
-- Run `pip install -r requirements-no-deps.txt --no-deps` to install additional requirements
+- Run `pip install -r requirements.txt` to install additional requirements
 - if you run `pip list` prolomeister should appear in the list
 
-STEP 3: **Install Jupyter lab**
-
-- Run `pip install jupyterlab` to install pip and its dependencies
-- Run `make install-kernel` to include the prolopricer environment in the kernel
 
 STEP 4: **Pre-commit install**
 
 - Install pre-commit in case you are going to do modifications to the code with the following command `pre-commit install`
-- Run `pre-commit run --all-files` to ensure any changes adhere to the specified guidelines
+- Run `pre-commit run --a` to ensure any changes adhere to the specified guidelines
 
-Setup/Activate environment
-python3 -m venv venv
-source venv/bin/activate
 
-Install Jupyter lab
-pip install jupyterlab
-
-Install main libraries (editable)
-and cli package
-pip install -e .
-
-Call from cli
-skeleton greet ismael
-
-Call from cli with options
-skeleton greet ismael -lan 'es'
 
 ### Create requirements txt
 
