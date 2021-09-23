@@ -30,7 +30,7 @@ setup(
     version="0.0.12",
     install_requires=base_dependencies,
     extras_require=additional_dependencies,
-    entry_points={"console_scripts": ["skeleton = package1.cli:main"]},
+    entry_points={"console_scripts": ["skeleton = skeleton.cli:main"]},
 )
 
 
