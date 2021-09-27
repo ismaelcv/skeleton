@@ -1,6 +1,6 @@
 ## ✅&nbsp; Installation Requirements
 
-STEP 1: **Cone the skeleton repo**
+STEP 1: **Clone the skeleton repo**
 `git clone git@github.com:ismaelcv/skeleton.git`
 
 STEP 2: **Set up a virtual environment**
@@ -8,27 +8,17 @@ STEP 2: **Set up a virtual environment**
 a) Install vitualenv: `sudo pip3 install virtualenv`
 b) create a virtual environment: `virtualenv venv`
 c) Activate the virtual environment: `source venv/bin/activate`
-d) make it availabke in jupyter: `python -m ipykernel install --user --name=venv`
 
-
-STEP 2: **Skeleton!!!**
-
+STEP 3: **Skeleton!!!**
 - Run `pip install -e .'[dev]'` to convert our code into a formal python package
 - Run `pip install -r requirements.txt` to install additional requirements
+- Install pre-commit `pre-commit install`
 - if you run `pip list` prolomeister should appear in the list
-
-
-STEP 4: **Pre-commit install**
-
-- Install pre-commit in case you are going to do modifications to the code with the following command `pre-commit install`
 - Run `pre-commit run --a` to ensure any changes adhere to the specified guidelines
 
 
 
-### Create requirements txt
 
-pip install pip-tools #pip tools to create requirements.txt
-pip-compile > requirements.txt
 
 docker
 docker build . -t skeletonapp

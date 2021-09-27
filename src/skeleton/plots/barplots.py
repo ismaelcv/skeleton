@@ -3,14 +3,13 @@ from typing import Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib.axes._subplots import AxesSubplot
 from matplotlib.figure import Figure
 from skeleton.wrangling.grouping import ratio_per_category
 
 
 def plot_percentage_per_subcategory(
     df: pd.DataFrame, primary: str, secondary: str
-) -> Tuple[Figure, AxesSubplot]:
+) -> Tuple[Figure, plt.Axes]:
     """
     Parameters
     ----------

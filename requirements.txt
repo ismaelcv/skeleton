@@ -19,3 +19,4 @@ starlette==0.13.6
 uvicorn==0.13.3
     # via skeleton (setup.py)
 jupyterlab
+pre-commit==2.15.0

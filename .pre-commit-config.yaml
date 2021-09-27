@@ -14,11 +14,11 @@ repos:
     rev: 20.8b1
     hooks:
       - id: black
-        args: [--line-length=110]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.770
     hooks:
       - id: mypy
+        exclude: ^example_repos/
   - repo: local
     hooks:
       - id: pylint
@@ -26,6 +26,8 @@ repos:
         entry: pylint
         language: system
         types: [python]
+        exclude: ^example_repos/
+
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.7.4
     hooks:
