@@ -54,7 +54,11 @@ def plot_percentage_per_subcategory(
                     x, y, str(c) + "%", ha="center", va="center", color=text_color, size=18, weight="bold"
                 )
 
-    ax.tick_params(axis="both", labelsize=20, color="black")
+    ax.tick_params(axis="both", labelsize=22, colors="dimgray")
+
+    for tick in ax.get_yticklabels():
+        tick.set_fontname("Space Mono")
+        tick.set_fontweight("bold")
 
     # Remove contour
     ax.spines["left"].set_visible(False)
@@ -62,7 +66,14 @@ def plot_percentage_per_subcategory(
     ax.spines["bottom"].set_visible(False)
     ax.spines["top"].set_visible(False)
 
-    ax.legend(ncol=len(category_names), bbox_to_anchor=(0, 1), loc="lower left", fontsize="15")
+    ax.legend(
+        ncol=len(category_names),
+        bbox_to_anchor=(0, 1),
+        loc="lower left",
+        fontsize="15",
+        title=secondary,
+        title_fontsize=16,
+    )
 
     return fig, ax
 

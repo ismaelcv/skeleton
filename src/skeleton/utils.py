@@ -1,4 +1,3 @@
-from numpy import str_
 import pandas as pd
 
 STRING_VALUE_LENGTH = 80
@@ -14,8 +13,8 @@ def pystr(df: pd.DataFrame) -> None:
         str_dtype = _parse_dtypes(df, col_name)
 
         if "float" in str_dtype:
-            values_str = [round(x, 1) if x > 1 else round(x, 2) for x in df[col_name].values[:n_values]]
-            values_str = ", ".join([str(x) for x in values_str])
+            rounded_vals_str = [round(x, 1) if x > 1 else round(x, 2) for x in df[col_name].values[:n_values]]
+            values_str = ", ".join([str(x) for x in [rounded_vals_str]])
         if "str" in str_dtype:
             values_str = ", ".join([f"\042{x}\042" for x in df[col_name].values[:n_values]])
         else:
@@ -57,8 +56,8 @@ def _parse_dtypes(df: pd.DataFrame, col_name: str) -> str:
     classes = list(dict.fromkeys([str(type(x)) for x in df[col_name].sample(SAMPLE_SIZE).dropna()]))
 
     if len(classes) == 0:
-        return _parse_string(f"Null", 8)
+        return _parse_string("Null", 8)
     if len(classes) == 1:
         return _parse_string(classes[0].replace("<class '", "").replace("'>", ""), 8)
-    else:
-        return _parse_string(f"{len(classes)} types", 8)
+
+    return _parse_string(f"{len(classes)} types", 8)
