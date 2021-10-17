@@ -57,7 +57,7 @@ def plot_percentage_per_subcategory(
     ax.tick_params(axis="both", labelsize=22, colors="dimgray")
 
     for tick in ax.get_yticklabels():
-        tick.set_fontname("Space Mono")
+        tick.set_fontname("Arial")
         tick.set_fontweight("bold")
 
     # Remove contour

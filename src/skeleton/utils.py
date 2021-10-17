@@ -1,6 +1,6 @@
 import pandas as pd
 
-STRING_VALUE_LENGTH = 80
+STRING_VALUE_LENGTH = 75
 
 
 def pystr(df: pd.DataFrame) -> None:
@@ -26,7 +26,7 @@ def pystr(df: pd.DataFrame) -> None:
         print(f"$ {_parse_string(col_name)}: {str_dtype} {values_str}")
 
 
-def _parse_string(string_name: str, string_size: int = 12) -> str:
+def _parse_string(string_name: str, string_size: int = 18) -> str:
 
     if len(string_name) > string_size:
         return f"{string_name[:string_size-2]}.."
@@ -51,13 +51,13 @@ def _parse_dtypes(df: pd.DataFrame, col_name: str) -> str:
     data_type = str(df.dtypes[col_name])
 
     if _contains(data_type, PRIMITIVE_TYPES):
-        return _parse_string(data_type, 8)
+        return _parse_string(data_type, 12)
 
     classes = list(dict.fromkeys([str(type(x)) for x in df[col_name].sample(SAMPLE_SIZE).dropna()]))
 
     if len(classes) == 0:
-        return _parse_string("Null", 8)
+        return _parse_string("Null", 12)
     if len(classes) == 1:
-        return _parse_string(classes[0].replace("<class '", "").replace("'>", ""), 8)
+        return _parse_string(classes[0].replace("<class '", "").replace("'>", ""), 12)
 
-    return _parse_string(f"{len(classes)} types", 8)
+    return _parse_string(f"{len(classes)} types", 12)
