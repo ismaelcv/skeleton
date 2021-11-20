@@ -1,28 +1,71 @@
-from matplotlib import pyplot as plt
 import pandas as pd
+from matplotlib import pyplot as plt
+from skeleton.plots.styles import BASE_STYLE
 
 
-def base_scatter(df: pd.DataFrame, x: str, y: str, labels: str = "", style: dict = {}) -> None:
+class base_scatter:
+
     """
-    Creates a base scatter plot.
+    class that plots a base scatter plot.
 
     """
 
-    if labels == "":
-        colors = style["colors"]["1cat"]
-    else:
-        colors = style["colors"]["2cat"] if len(df[labels].unique()) > 1 else style["colors"]["1cat"]
+    def __init__(self, df: pd.DataFrame, x: str, y: str, labels: str = "", style: dict = BASE_STYLE) -> None:
+        self.df = df
+        self.x = x
+        self.y = y
+        self.labels = labels
+        self.style = style
 
-    plt.rcParams.update(style["rcParams"])
-    # TODO: Add a way to modify figsize upstr
-    plt.scatter(df[x], df[y], color=colors, s=50)
-    plt.scatter(df[x], df[y], color=colors, s=200, alpha=0.2)
+        self._set_figsize()
 
-    if "xticks" in style["settings"]:
-        plt.xticks(**style["settings"]["xticks"])
+    def _set_figsize(self, figsize: list = [12, 6]) -> None:
+        """
+        Set figure size.
 
-    if "yticks" in style["settings"]:
-        plt.yticks(**style["settings"]["yticks"])
+        """
+        if len(figsize) == 2 and figsize[0] > 0 and figsize[1] > 0:
+            self.style["rcParams"]["figure.figsize"] = figsize
 
-    plt.ylabel(y)
-    plt.xlabel(x)
+    def _set_styleParams(self, params: dict) -> None:
+        """
+        Set parameters for the plot.
+
+        """
+        for key, value in params.items():
+            if key in self.style["styleParams"]:
+                self.style["styleParams"][key] = value
+
+    def show(self) -> None:
+
+        if self.labels == "":
+            colors = self.style["colors"]["1cat"]
+        else:
+            colors = (
+                self.style["colors"]["2cat"]
+                if len(self.df[self.labels].unique()) > 1
+                else self.style["colors"]["1cat"]
+            )
+
+        plt.rcParams.update(self.style["rcParams"])
+        plt.scatter(
+            self.df[self.x], self.df[self.y], color=colors, s=self.style["styleParams"]["marker_size"]
+        )
+
+        if self.style["styleParams"]["marker_shadow"]:
+            plt.scatter(
+                self.df[self.x],
+                self.df[self.y],
+                color=colors,
+                s=self.style["styleParams"]["marker_size"] * 4,
+                alpha=0.2,
+            )
+
+        if "xticks" in self.style["styleParams"]:
+            plt.xticks(**self.style["styleParams"]["xticks"])
+
+        if "yticks" in self.style["styleParams"]:
+            plt.yticks(**self.style["styleParams"]["yticks"])
+
+        plt.ylabel(self.y)
+        plt.xlabel(self.x)
