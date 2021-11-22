@@ -12,7 +12,7 @@ MKBHD = {
         # XY line axis color
         "axes.edgecolor": "white",
         # XY line width
-        "axes.linewidth": 5,
+        "axes.linewidth": 4,
         # XY line remove top/right
         "axes.spines.right": False,
         "axes.spines.top": False,
@@ -38,7 +38,7 @@ MKBHD = {
         "marker_size": 50,
         "marker_shadow": True,
     },
-    "colors": {"1cat": "white", "ncats": plt_tab_colors},
+    "colors": {"1cat": "red", "ncats": plt_tab_colors},
 }
 
 
@@ -54,7 +54,7 @@ BASE_STYLE = {
         # XY line axis color
         "axes.edgecolor": "black",
         # XY line width
-        "axes.linewidth": 5,
+        "axes.linewidth": 2,
         # XY line remove top/right
         "axes.spines.right": False,
         "axes.spines.top": False,
@@ -81,4 +81,10 @@ BASE_STYLE = {
         "marker_shadow": False,
     },
     "colors": {"1cat": "tab:blue", "ncats": plt_tab_colors},
+}
+
+
+STYLES = {
+    "base": BASE_STYLE,
+    "mkbhd": MKBHD,
 }

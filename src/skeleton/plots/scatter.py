@@ -1,6 +1,6 @@
 import pandas as pd
 from matplotlib import pyplot as plt
-from skeleton.plots.styles import BASE_STYLE
+from skeleton.plots.styles import STYLES
 
 
 class base_scatter:
@@ -10,22 +10,24 @@ class base_scatter:
 
     """
 
-    def __init__(self, df: pd.DataFrame, x: str, y: str, labels: str = "", style: dict = BASE_STYLE) -> None:
+    def __init__(  # pylint: disable=too-many-arguments
+        self, df: pd.DataFrame, x: str, y: str, labels: str = "", style: str = "base"
+    ) -> None:
         self.df = df
         self.x = x
         self.y = y
         self.labels = labels
-        self.style = style
+        self.style = STYLES[style]
 
         self._set_figsize()
 
-    def _set_figsize(self, figsize: list = [12, 6]) -> None:
+    def _set_figsize(self, w: int = 12, h: int = 6) -> None:
         """
         Set figure size.
 
         """
-        if len(figsize) == 2 and figsize[0] > 0 and figsize[1] > 0:
-            self.style["rcParams"]["figure.figsize"] = figsize
+        if w > 0 and h > 0:
+            self.style["rcParams"]["figure.figsize"] = [w, h]
 
     def _set_styleParams(self, params: dict) -> None:
         """
