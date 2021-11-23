@@ -37,6 +37,19 @@ MKBHD = {
         "yticks": {"fontsize": 15, "fontweight": "bold"},
         "marker_size": 50,
         "marker_shadow": True,
+        "title_style": {
+            "fontsize": 24,
+            "color": "white",
+            "fontweight": "bold",
+            "xy": (0.00, 1.10),
+            "xycoords": "axes fraction",
+        },
+        "subtitle_style": {
+            "color": "red",
+            "fontsize": 20,
+            "xy": (0.00, 1.05),
+            "xycoords": "axes fraction",
+        },
     },
     "colors": {"1cat": "red", "ncats": plt_tab_colors},
 }
@@ -79,6 +92,18 @@ BASE_STYLE = {
         "yticks": {"fontsize": 15, "fontweight": "normal"},
         "marker_size": 40,
         "marker_shadow": False,
+        "title_style": {
+            "fontsize": 24,
+            "fontweight": "bold",
+            "xy": (0.00, 1.10),
+            "xycoords": "axes fraction",
+        },
+        "subtitle_style": {
+            "fontsize": 19,
+            "color": "#696969",
+            "xy": (0.00, 1.05),
+            "xycoords": "axes fraction",
+        },
     },
     "colors": {"1cat": "tab:blue", "ncats": plt_tab_colors},
 }
