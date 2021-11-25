@@ -19,8 +19,6 @@ class graph:
         self.colors = STYLES[style]["colors"]
         self._set_figsize()
 
-        print(self.styleParams)
-
     def set_title(self, title: str) -> None:
         self.styleParams["title_style"]["text"] = title
 
