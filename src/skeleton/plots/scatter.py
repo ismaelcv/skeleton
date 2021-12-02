@@ -31,10 +31,11 @@ class graph:
 
         """
         self.z = column_name
+        self.main_categories = self.df[column_name].unique().tolist()
 
-        print(self.df[self.plot_by].unique().to_list())
+        print(self.main_categories)
 
-    def important_atribute(self, category: Union[str, list]) -> None:
+    def focus_on(self, category: Union[str, list]) -> None:
         """
         Set the main category for the plot.
 
