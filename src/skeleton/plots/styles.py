@@ -141,10 +141,15 @@ innocent = {
         "savefig.facecolor": "white",
         "savefig.edgecolor": "white",
     },
+    "scatter_style": {
+        "s": 40,
+    },
+    "line_style": {
+        "linewidth": 1.5,
+    },
     "styleParams": {
         "xticks": {"rotation": 45, "fontsize": 13, "fontweight": "normal"},
         "yticks": {"fontsize": 15, "fontweight": "normal"},
-        "marker_size": 40,
         "marker_shadow": False,
         "title_style": {
             "fontsize": 24,

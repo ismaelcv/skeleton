@@ -1,7 +1,8 @@
+from typing import Union
+
 import pandas as pd
 from matplotlib import pyplot as plt
 from skeleton.plots.styles import STYLES
-from typing import Union
 
 
 class graph:
@@ -17,29 +18,33 @@ class graph:
         self.df = df
         self.x = x
         self.y = y
-        self.labels = ""
         self.styleParams = STYLES[style]["styleParams"]
         self.rcParams = STYLES[style]["rcParams"]
         self.colors = STYLES[style]["colors"]
         self._set_figsize()
         self.z = ""  # type: str
         self.main_categories = []  # type: list
+        self.style = STYLES[style]
 
-    def plot_by(self, column_name: str) -> None:
+    def color_by(self, column_name: str) -> None:
         """
-        Set the plot by category.
+        Set the color for the plot.
 
         """
+
+        if column_name not in self.df.columns:
+            raise ValueError(f"{column_name} not in dataframe")
+
         self.z = column_name
-        self.main_categories = self.df[column_name].unique().tolist()
 
-        print(self.main_categories)
+        self.styleParams["color_by"] = column_name
 
     def focus_on(self, category: Union[str, list]) -> None:
         """
         Set the main category for the plot.
 
         """
+
         if isinstance(category, str):
             self.main_categories.append(category)
         elif isinstance(category, list):
@@ -71,13 +76,32 @@ class graph:
 class base_scatter(graph):
     def show(self) -> None:
 
-        if self.labels == "":
-            colors = self.colors["1cat"]
-        else:
-            colors = self.colors["2cat"] if len(self.df[self.labels].unique()) > 1 else self.colors["1cat"]
+        if self.z != "":
+            categories = self.df[self.z].unique().tolist()
 
+            if len(categories) == 0:
+                raise ValueError("No categories found: Length of categories is 0")
+        else:
+            categories = []
+
+        print(categories)
         plt.rcParams.update(self.rcParams)
-        plt.scatter(self.df[self.x], self.df[self.y], color=colors, s=self.styleParams["marker_size"])
+
+        if len(categories) <= 1:
+            color = self.colors["1cat"]
+            plt.scatter(self.df[self.x], self.df[self.y], color=color, s=self.styleParams["marker_size"])
+
+        else:
+            colors = self.colors["ncats"]
+
+            for i, category in enumerate(categories):
+
+                color = colors[i % len(colors)]
+
+                x_axis = self.df[self.x][self.df[self.z] == category]
+                y_axis = self.df[self.y][self.df[self.z] == category]
+
+                plt.scatter(x_axis, y_axis, color=color, s=self.styleParams["marker_size"])
 
         if self.styleParams["marker_shadow"]:
             plt.scatter(
@@ -115,18 +139,31 @@ class base_lineplot(graph):
 
         plt.rcParams.update(self.rcParams)
 
-        if len(self.main_categories) > 0:
-            for i, cat in enumerate(self.main_categories):
-
-                print(cat, self.y)
-                plt.plot(
-                    self.df[self.x],
-                    self.df[self.y][self.df[self.y] == cat],
-                    color=self.colors["ncats"][i],
-                    # **self.styleParams["plot_style"],
-                )
+        if self.z != "":
+            categories = self.df[self.z].unique().tolist()
+            if len(categories) == 0:
+                raise ValueError("No categories found: Length of categories is 0")
         else:
-            plt.plot(self.df[self.x], self.df[self.y], color=self.colors["1cat"], lw=1)
+            categories = []
+
+        print(categories)
+        plt.rcParams.update(self.rcParams)
+
+        if len(categories) <= 1:
+            color = self.colors["1cat"]
+            plt.plot(self.df[self.x], self.df[self.y], color=color, **self.style["line_style"])
+
+        else:
+            colors = self.colors["ncats"]
+
+            for i, category in enumerate(categories):
+
+                color = colors[i % len(colors)]
+
+                x_axis = self.df[self.x][self.df[self.z] == category]
+                y_axis = self.df[self.y][self.df[self.z] == category]
+
+                plt.plot(x_axis, y_axis, color=color, **self.style["line_style"])
 
         # plt.plot(self.df[self.x], self.df[self.y], color="#16264c", lw=1)
 
@@ -146,7 +183,3 @@ class base_lineplot(graph):
 
         plt.ylabel(self.y)
         plt.xlabel(self.x)
-
-        plt.show()
-
-        print("hola")
