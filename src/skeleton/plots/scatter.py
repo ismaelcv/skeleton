@@ -2,7 +2,9 @@ from typing import Union
 
 import pandas as pd
 from matplotlib import pyplot as plt
-from skeleton.plots.styles import STYLES
+from skeleton.plots.utils import load_styles
+
+STYLES = load_styles()
 
 
 class graph:
@@ -49,8 +51,6 @@ class graph:
             self.main_categories.append(category)
         elif isinstance(category, list):
             self.main_categories = category + self.main_categories
-
-        print(self.main_categories)
 
     def set_title(self, title: str) -> None:
         self.styleParams["title_style"]["text"] = title
@@ -103,7 +103,6 @@ class base_scatter(graph):
         else:
             categories = []
 
-        print(categories)
         plt.rcParams.update(self.rcParams)
 
         if len(categories) <= 1:
@@ -116,8 +115,6 @@ class base_scatter(graph):
             colors = self.colors["ncats"]
 
             for i, category in enumerate(categories):
-
-                print(i, category)
 
                 color = colors[i % len(colors)]
 
