@@ -72,45 +72,7 @@ class graph:
             if key in self.styleParams:
                 self.styleParams[key] = value
 
-
-class base_scatter(graph):
-    def show(self) -> None:
-
-        if self.z != "":
-            categories = self.df[self.z].unique().tolist()
-
-            if len(categories) == 0:
-                raise ValueError("No categories found: Length of categories is 0")
-        else:
-            categories = []
-
-        print(categories)
-        plt.rcParams.update(self.rcParams)
-
-        if len(categories) <= 1:
-            color = self.colors["1cat"]
-            plt.scatter(self.df[self.x], self.df[self.y], color=color, s=self.styleParams["marker_size"])
-
-        else:
-            colors = self.colors["ncats"]
-
-            for i, category in enumerate(categories):
-
-                color = colors[i % len(colors)]
-
-                x_axis = self.df[self.x][self.df[self.z] == category]
-                y_axis = self.df[self.y][self.df[self.z] == category]
-
-                plt.scatter(x_axis, y_axis, color=color, s=self.styleParams["marker_size"])
-
-        if self.styleParams["marker_shadow"]:
-            plt.scatter(
-                self.df[self.x],
-                self.df[self.y],
-                color=colors,
-                s=self.styleParams["marker_size"] * 4,
-                alpha=0.2,
-            )
+    def add_plot_annotations(self) -> None:
 
         if "text" in self.styleParams["title_style"]:
             plt.annotate(**self.styleParams["title_style"])
@@ -129,9 +91,42 @@ class base_scatter(graph):
         plt.ylabel(self.y)
         plt.xlabel(self.x)
 
-        plt.show()
 
-        print("hola")
+class base_scatter(graph):
+    def show(self) -> None:
+
+        if self.z != "":
+            categories = self.df[self.z].unique().tolist()
+
+            if len(categories) == 0:
+                raise ValueError("No categories found: Length of categories is 0")
+        else:
+            categories = []
+
+        print(categories)
+        plt.rcParams.update(self.rcParams)
+
+        if len(categories) <= 1:
+
+            color = self.colors["1cat"]
+            plt.scatter(self.df[self.x], self.df[self.y], color=color, **self.style["scatter_style"])
+
+        else:
+
+            colors = self.colors["ncats"]
+
+            for i, category in enumerate(categories):
+
+                print(i, category)
+
+                color = colors[i % len(colors)]
+
+                x_axis = self.df[self.x][self.df[self.z] == category]
+                y_axis = self.df[self.y][self.df[self.z] == category]
+
+                plt.scatter(x_axis, y_axis, color=color, **self.style["scatter_style"])
+
+        self.add_plot_annotations()
 
 
 class base_lineplot(graph):
@@ -146,7 +141,6 @@ class base_lineplot(graph):
         else:
             categories = []
 
-        print(categories)
         plt.rcParams.update(self.rcParams)
 
         if len(categories) <= 1:
@@ -165,21 +159,4 @@ class base_lineplot(graph):
 
                 plt.plot(x_axis, y_axis, color=color, **self.style["line_style"])
 
-        # plt.plot(self.df[self.x], self.df[self.y], color="#16264c", lw=1)
-
-        # if "text" in self.styleParams["title_style"]:
-        #     plt.annotate(**self.styleParams["title_style"])
-
-        # if "text" in self.styleParams["subtitle_style"]:
-        #     plt.annotate(
-        #         **self.styleParams["subtitle_style"],
-        #     )
-
-        # if "xticks" in self.styleParams:
-        #     plt.xticks(**self.styleParams["xticks"])
-
-        # if "yticks" in self.styleParams:
-        #     plt.yticks(**self.styleParams["yticks"])
-
-        plt.ylabel(self.y)
-        plt.xlabel(self.x)
+        self.add_plot_annotations()

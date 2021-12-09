@@ -36,7 +36,6 @@ MKBHD = {
         "xticks": {"rotation": 45, "fontsize": 13, "fontweight": "bold"},
         "yticks": {"fontsize": 15, "fontweight": "bold"},
         "marker_size": 50,
-        "marker_shadow": True,
         "title_style": {
             "fontsize": 24,
             "color": "white",
@@ -91,7 +90,6 @@ BASE_STYLE = {
         "xticks": {"rotation": 45, "fontsize": 13, "fontweight": "normal"},
         "yticks": {"fontsize": 15, "fontweight": "normal"},
         "marker_size": 40,
-        "marker_shadow": False,
         "title_style": {
             "fontsize": 24,
             "fontweight": "bold",
@@ -150,7 +148,6 @@ innocent = {
     "styleParams": {
         "xticks": {"rotation": 45, "fontsize": 13, "fontweight": "normal"},
         "yticks": {"fontsize": 15, "fontweight": "normal"},
-        "marker_shadow": False,
         "title_style": {
             "fontsize": 24,
             "fontweight": "bold",
