@@ -12,6 +12,6 @@ def load_styles() -> dict:
 
     for style in styles:
 
-        STYLES[style] = importlib.import_module(f"skeleton.plots.styles.{style}.style").style  # type: ignore
+        STYLES[style] = importlib.import_module(f"skeleton.plots.styles.{style}").style  # type: ignore
 
     return STYLES
