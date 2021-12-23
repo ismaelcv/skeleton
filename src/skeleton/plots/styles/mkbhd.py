@@ -32,15 +32,26 @@ style = {
         "savefig.facecolor": "black",
         "savefig.edgecolor": "black",
     },
+    "scatter_style": {
+        "s": 40,
+    },
+    "line_style": {
+        "linewidth": 1.5,
+    },
+    "scattershadow_style": {
+        "s": 40,
+    },
+    "lineshadow_style": {
+        "linewidth": 1,
+    },
     "styleParams": {
         "xticks": {"rotation": 45, "fontsize": 13, "fontweight": "bold"},
         "yticks": {"fontsize": 15, "fontweight": "bold"},
-        "marker_size": 50,
         "title_style": {
             "fontsize": 24,
             "color": "white",
             "fontweight": "bold",
-            "xy": (0.00, 1.10),
+            "xy": (0.00, 1.11),
             "xycoords": "axes fraction",
         },
         "subtitle_style": {
@@ -50,5 +61,5 @@ style = {
             "xycoords": "axes fraction",
         },
     },
-    "colors": {"1cat": "red", "ncats": plt_tab_colors},
+    "colors": {"1cat": "red", "ncats": plt_tab_colors, "grayed": "lightgray"},
 }

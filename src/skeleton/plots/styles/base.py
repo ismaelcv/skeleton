@@ -8,7 +8,7 @@ style = {
         # Labels settings
         "axes.labelcolor": "black",
         "axes.labelsize": 20,
-        "axes.labelpad": 25,
+        "axes.labelpad": 23,
         # XY line axis color
         "axes.edgecolor": "black",
         # XY line width
@@ -19,9 +19,9 @@ style = {
         # Change xy axis color
         "xtick.color": "black",
         "ytick.color": "black",
-        "xtick.major.size": 7,
+        "xtick.major.size": 6,
         "xtick.major.width": 1,
-        "ytick.major.size": 7,
+        "ytick.major.size": 7.2,
         "ytick.major.width": 1,
         # Y grid
         "grid.color": "lightgray",
@@ -32,14 +32,25 @@ style = {
         "savefig.facecolor": "white",
         "savefig.edgecolor": "white",
     },
+    "scatter_style": {
+        "s": 40,
+    },
+    "line_style": {
+        "linewidth": 1.5,
+    },
+    "lineshadow_style": {
+        "linewidth": 1,
+    },
+    "scattershadow_style": {
+        "s": 40,
+    },
     "styleParams": {
         "xticks": {"rotation": 45, "fontsize": 13, "fontweight": "normal"},
         "yticks": {"fontsize": 15, "fontweight": "normal"},
-        "marker_size": 40,
         "title_style": {
             "fontsize": 24,
             "fontweight": "bold",
-            "xy": (0.00, 1.10),
+            "xy": (0.00, 1.12),
             "xycoords": "axes fraction",
         },
         "subtitle_style": {
@@ -49,5 +60,5 @@ style = {
             "xycoords": "axes fraction",
         },
     },
-    "colors": {"1cat": "tab:blue", "ncats": plt_tab_colors},
+    "colors": {"1cat": "tab:blue", "ncats": plt_tab_colors, "grayed": "lightgray"},
 }

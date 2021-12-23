@@ -32,6 +32,12 @@ style = {
         "savefig.facecolor": "white",
         "savefig.edgecolor": "white",
     },
+    "lineshadow_style": {
+        "linewidth": 1,
+    },
+    "scattershadow_style": {
+        "s": 40,
+    },
     "scatter_style": {
         "s": 40,
     },
@@ -54,5 +60,5 @@ style = {
             "xycoords": "axes fraction",
         },
     },
-    "colors": {"1cat": "#16264c", "ncats": plt_tab_colors},
+    "colors": {"1cat": "#16264c", "ncats": plt_tab_colors, "grayed": "lightgray"},
 }

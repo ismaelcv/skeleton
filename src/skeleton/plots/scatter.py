@@ -45,16 +45,59 @@ class graph:
         if self.main_categories == []:
             self.main_categories = list(self.df[column_name].unique())
 
+        available_values = list(
+            self.df.loc[self.df[self.z].isin(self.main_categories), self.z].value_counts().index
+        )
+
+        if len(self.main_categories) > 20:
+            print(
+                f"Posible categories to .focus_on()  {available_values[:20]} and {len(self.main_categories) - 20} more"
+            )
+        else:
+            print(f"Possible categories to .focus_on() {available_values}")
+
     def focus_on(self, category: Union[str, list]) -> None:
         """
         Set the main category for the plot.
 
         """
 
+        if self.z == "":
+            raise ValueError(
+                """
+                No column to split on selected (z)
+                Please select a column with .color_by("column_name ")
+                """
+            )
+
+        all_cats_available = list(self.df[self.z].unique())
+
+        if self.main_categories == all_cats_available:
+            self.main_categories = []
+
         if isinstance(category, str):
+
+            if category not in all_cats_available:
+                raise ValueError(
+                    f"{category} is not included on the main categories avalable in the {self.z} column"
+                )
             self.main_categories.append(category)
+
         elif isinstance(category, list):
-            self.main_categories = category + self.main_categories
+
+            invalid_categories = []
+            for requested_cat in category:
+                if requested_cat not in all_cats_available:
+                    invalid_categories.append(requested_cat)
+
+            if len(invalid_categories) > 0:
+                raise ValueError(
+                    f"{invalid_categories} does not form part of the available categories of  the column {self.x}"
+                )
+
+            self.main_categories.append(category)
+
+        self.main_categories = list(pd.Series(self.main_categories).unique())
 
     def set_title(self, title: str) -> None:
         self.styleParams["title_style"]["text"] = title
@@ -135,6 +178,8 @@ class graph:
 
         if y is None:
 
+            self._check_is_numeric(self.x)
+
             if category is None and len(self.main_categories) > 1:
                 raise ValueError(
                     f"""
@@ -167,6 +212,17 @@ class graph:
                 ]
             )
 
+    def _check_is_numeric(self, column: str) -> None:
+        try:
+            self.df[column].astype("float64")
+        except ValueError:
+            print(
+                f"""
+                {column} is not a numerical python type.
+                Notes based on only one axis can only be perfom on numerical columns")
+                """
+            )
+
 
 class base_scatter(graph):
     def show(self) -> None:
@@ -187,12 +243,25 @@ class base_scatter(graph):
             plt.scatter(self.df[self.x], self.df[self.y], color=color, **self.style["scatter_style"])
 
         else:
-
             colors = self.colors["ncats"]
 
-            for i, category in enumerate(categories):
+            for category in categories:
 
-                color = colors[i % len(colors)]
+                if category not in self.main_categories:
+
+                    x_axis = self.df[self.x][self.df[self.z] == category]
+                    y_axis = self.df[self.y][self.df[self.z] == category]
+
+                    plt.scatter(
+                        x_axis, y_axis, color=self.colors["grayed"], **self.style["scattershadow_style"]
+                    )
+
+            for i, category in enumerate(self.main_categories):
+
+                if len(self.main_categories) == 1:
+                    color = self.colors["1cat"]
+                else:
+                    color = colors[i % len(colors)]
 
                 x_axis = self.df[self.x][self.df[self.z] == category]
                 y_axis = self.df[self.y][self.df[self.z] == category]
@@ -227,9 +296,21 @@ class base_lineplot(graph):
         else:
             colors = self.colors["ncats"]
 
-            for i, category in enumerate(categories):
+            for category in categories:
 
-                color = colors[i % len(colors)]
+                if category not in self.main_categories:
+
+                    x_axis = self.df[self.x][self.df[self.z] == category]
+                    y_axis = self.df[self.y][self.df[self.z] == category]
+
+                    plt.plot(x_axis, y_axis, color=self.colors["grayed"], **self.style["lineshadow_style"])
+
+            for i, category in enumerate(self.main_categories):
+
+                if len(self.main_categories) == 1:
+                    color = self.colors["1cat"]
+                else:
+                    color = colors[i % len(colors)]
 
                 x_axis = self.df[self.x][self.df[self.z] == category]
                 y_axis = self.df[self.y][self.df[self.z] == category]

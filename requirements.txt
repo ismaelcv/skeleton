@@ -20,3 +20,4 @@ uvicorn==0.13.3
     # via skeleton (setup.py)
 jupyterlab
 pre-commit==2.15.0
+pylint==2.12.2
