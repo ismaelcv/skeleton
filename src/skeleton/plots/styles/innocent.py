@@ -49,13 +49,13 @@ style = {
         "yticks": {"fontsize": 15, "fontweight": "normal"},
         "ylabel": {},
         "xlabel": {},
-        "title_style": {
+        "title": {
             "fontsize": 24,
             "fontweight": "bold",
             "xy": (0.00, 1.10),
             "xycoords": "axes fraction",
         },
-        "subtitle_style": {
+        "subtitle": {
             "fontsize": 19,
             "color": "#696969",
             "xy": (0.00, 1.05),

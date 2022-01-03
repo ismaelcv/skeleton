@@ -15,7 +15,7 @@ class plot:
     Generic class to genererate a plt graph
     """
 
-    def __init__(self, df: pd.DataFrame, x: str, y: str, style: str = "base") -> None:
+    def __init__(self, df: pd.DataFrame, x: str, y: str, style: str = "base", mode: str = "both") -> None:
 
         self.STYLES = self.load_styles()
 
@@ -24,8 +24,8 @@ class plot:
         self.df = df
         self.x = x
         self.y = y
-
-        self.set_style(style)
+        self._set_mode(mode)
+        self._set_style(style)
         self.set_xlabel(self.x)
         self.set_ylabel(self.y)
         self.set_figsize()
@@ -61,6 +61,13 @@ class plot:
             print(f"Possible categories to .focus_on() {available_values}")
 
         return self
+
+    def _set_mode(self, mode: str) -> None:
+
+        if mode in ["both", "scatter", "line"]:
+            self.mode = mode
+        else:
+            raise ValueError("mode must be either 'both', 'scatter' or 'line'")
 
     def focus_on(self, category: Union[str, list]) -> plot:
         """
@@ -107,7 +114,7 @@ class plot:
 
         return self
 
-    def set_style(self, style: str) -> plot:
+    def _set_style(self, style: str) -> plot:
 
         if style in self.STYLES:
             self.style = self.STYLES[style]
@@ -118,6 +125,14 @@ class plot:
         else:
             raise ValueError(f"{style} is not a valid style")
 
+        return self
+
+    def set_yticks(self, positions: list, **kwargs: dict) -> plot:
+        self.styleParams["yticks"] = {**self.styleParams["yticks"], **{"ticks": positions}, **kwargs}
+        return self
+
+    def set_xticks(self, positions: list, **kwargs: dict) -> plot:
+        self.styleParams["xticks"] = {**self.styleParams["xticks"], **{"ticks": positions}, **kwargs}
         return self
 
     def set_ylabel(self, label: str, **kwargs: dict) -> plot:
@@ -284,12 +299,23 @@ class plot:
                     x_axis = self.df[self.x][self.df[self.z] == category]
                     y_axis = self.df[self.y][self.df[self.z] == category]
 
-                    plt.plot(
-                        x_axis,
-                        y_axis,
-                        color=self.colors["grayed"],
-                        **self.style["lineshadow_style"],
-                    )
+                    if self.mode in ["line", "both"]:
+
+                        plt.plot(
+                            x_axis,
+                            y_axis,
+                            color=self.colors["grayed"],
+                            **self.style["lineshadow_style"],
+                        )
+
+                    else:
+
+                        plt.scatter(
+                            x_axis,
+                            y_axis,
+                            color=self.colors["grayed"],
+                            **self.style["scattershadow_style"],
+                        )
 
             for i, category in enumerate(self.main_categories):
 
@@ -301,8 +327,10 @@ class plot:
                 x_axis = self.df[self.x][self.df[self.z] == category]
                 y_axis = self.df[self.y][self.df[self.z] == category]
 
-                plt.plot(x_axis, y_axis, color=color, **self.style["line_style"])
-                plt.scatter(x_axis, y_axis, color=color, **self.style["scatter_style"])
+                if self.mode in ["line", "both"]:
+                    plt.plot(x_axis, y_axis, color=color, **self.style["line_style"])
+                if self.mode in ["scatter", "both"]:
+                    plt.scatter(x_axis, y_axis, color=color, **self.style["scatter_style"])
 
         plt.ylabel(**self.styleParams["ylabel"])
         plt.xlabel(**self.styleParams["xlabel"])
@@ -312,8 +340,6 @@ class plot:
         # Dirty Trick to extend the plot to the right in Jupyter notebooks
         plt.text(1, 1.04, "t", transform=plt.gcf().transFigure, color=self.rcParams["figure.facecolor"])
         plt.text(-0.05, -0.1, "t", transform=plt.gcf().transFigure, color=self.rcParams["figure.facecolor"])
-
-        # plt.text(-0.05, -0.05, "t", transform=plt.gcf().transFigure, color=self.rcParams["figure.facecolor"])
 
         if "text" in self.styleParams["title"]:
             plt.annotate(**self.styleParams["title"])
@@ -325,56 +351,3 @@ class plot:
         plt.yticks(**self.styleParams["yticks"])
 
         plt.show()
-
-
-# class base_scatter(graph):
-#     def show(self) -> None:
-
-#         if self.z != "":
-#             categories = self.df[self.z].unique().tolist()
-
-#             if len(categories) == 0:
-#                 raise ValueError("No categories found: Length of categories is 0")
-#         else:
-#             categories = []
-
-#         plt.rcParams.update(self.rcParams)
-
-#         if len(categories) <= 1:
-
-#             color = self.colors["1cat"]
-#             plt.scatter(self.df[self.x], self.df[self.y], color=color, **self.style["scatter_style"])
-
-#         else:
-#             colors = self.colors["ncats"]
-
-#             for category in categories:
-
-#                 if category not in self.main_categories:
-
-#                     x_axis = self.df[self.x][self.df[self.z] == category]
-#                     y_axis = self.df[self.y][self.df[self.z] == category]
-
-#                     plt.scatter(
-#                         x_axis, y_axis, color=self.colors["grayed"], **self.style["scattershadow_style"]
-#                     )
-
-#             for i, category in enumerate(self.main_categories):
-
-#                 if len(self.main_categories) == 1:
-#                     color = self.colors["1cat"]
-#                 else:
-#                     color = colors[i % len(colors)]
-
-#                 x_axis = self.df[self.x][self.df[self.z] == category]
-#                 y_axis = self.df[self.y][self.df[self.z] == category]
-
-#                 plt.scatter(x_axis, y_axis, color=color, **self.style["scatter_style"])
-
-#         for note, kwargs in self.notes:
-
-#             plt.annotate(**note, **kwargs)
-
-#         self.add_plot_style()
-
-#         plt.show()

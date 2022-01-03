@@ -21,6 +21,7 @@ disable = [
      "too-many-locals",
      "R1729",
      "R0201",
+     "R0912",
      "too-many-instance-attributes",
 ]
 
