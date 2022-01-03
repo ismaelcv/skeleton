@@ -1,37 +1,39 @@
 from __future__ import annotations
 
+import importlib
+import pkgutil
 from typing import Optional, Union
 
 import pandas as pd
+import skeleton.plots.styles as defined_styles
 from matplotlib import pyplot as plt
-from skeleton.plots.utils import load_styles
-
-STYLES = load_styles()
 
 
-class graph:
+class plot:
 
     """
     Generic class to genererate a plt graph
     """
 
-    def __init__(self, df: pd.DataFrame, x: str, y: str) -> None:
+    def __init__(self, df: pd.DataFrame, x: str, y: str, style: str = "base") -> None:
+
+        self.STYLES = self.load_styles()
 
         plt.rcParams.update(plt.rcParamsDefault)
 
         self.df = df
         self.x = x
         self.y = y
-        self.styleParams = STYLES["base"]["styleParams"]
-        self.rcParams = STYLES["base"]["rcParams"]
-        self.colors = STYLES["base"]["colors"]
-        self._set_figsize()
+
+        self.set_style(style)
+        self.set_xlabel(self.x)
+        self.set_ylabel(self.y)
+        self.set_figsize()
         self.z = ""  # type: str
         self.main_categories = []  # type: list
         self.notes = []  # type: list
-        self.style = STYLES["base"]
 
-    def color_by(self, column_name: str) -> graph:
+    def color_by(self, column_name: str) -> plot:
         """
         Set the color for the plot.
 
@@ -60,7 +62,7 @@ class graph:
 
         return self
 
-    def focus_on(self, category: Union[str, list]) -> None:
+    def focus_on(self, category: Union[str, list]) -> plot:
         """
         Set the main category for the plot.
 
@@ -103,28 +105,48 @@ class graph:
 
         self.main_categories = list(pd.Series(self.main_categories).unique())
 
-    def set_style(self, style: str) -> graph:
+        return self
 
-        if style in STYLES:
-            self.style = STYLES[style]
-            self.styleParams = STYLES[style]["styleParams"]
-            self.rcParams = STYLES[style]["rcParams"]
-            self.colors = STYLES[style]["colors"]
+    def set_style(self, style: str) -> plot:
+
+        if style in self.STYLES:
+            self.style = self.STYLES[style]
+            self.styleParams = self.STYLES[style]["styleParams"]
+            self.rcParams = self.STYLES[style]["rcParams"]
+            self.colors = self.STYLES[style]["colors"]
+
         else:
             raise ValueError(f"{style} is not a valid style")
 
         return self
 
-    def set_title(self, title: str) -> None:
-        self.styleParams["title_style"]["text"] = title
+    def set_ylabel(self, label: str, **kwargs: dict) -> plot:
+        self.styleParams["ylabel"] = {**self.styleParams["ylabel"], **{"ylabel": label}, **kwargs}
+        return self
 
-    def set_subtitle(self, subtitle: str) -> None:
-        self.styleParams["subtitle_style"]["text"] = subtitle
-        self.styleParams["title_style"]["xy"] = (0.00, 1.13)
+    def set_xlabel(self, label: str, **kwargs: dict) -> plot:
+        self.styleParams["xlabel"] = {**self.styleParams["xlabel"], **{"xlabel": label}, **kwargs}
+        return self
 
-    def _set_figsize(self, w: int = 12, h: int = 6) -> None:
+    def set_title(self, title: str, **kwargs: dict) -> plot:
+
+        self.styleParams["title"] = {**self.styleParams["title"], **{"text": title}, **kwargs}
+
+        return self
+
+    def set_subtitle(self, subtitle: str) -> plot:
+        self.styleParams["subtitle"]["text"] = subtitle
+        self.styleParams["title"]["xy"] = (0.00, 1.16)
+
+        return self
+
+    def set_figsize(self, w: int = 9, h: int = 4) -> plot:
         if w > 0 and h > 0:
-            self.rcParams["figure.figsize"] = [w, h]
+            self.rcParams["figure.figsize"] = (w, h)
+
+        else:
+            raise ValueError("w and h must be greater than 0")
+        return self
 
     def _set_styleParams(self, params: dict) -> None:
         """
@@ -135,24 +157,17 @@ class graph:
             if key in self.styleParams:
                 self.styleParams[key] = value
 
-    def _apply_style(self) -> None:
+    def load_styles(self) -> dict:
 
-        if "text" in self.styleParams["title_style"]:
-            plt.annotate(**self.styleParams["title_style"])
+        styles = [x.name for x in pkgutil.iter_modules(defined_styles.__path__)]
 
-        if "text" in self.styleParams["subtitle_style"]:
-            plt.annotate(
-                **self.styleParams["subtitle_style"],
-            )
+        STYLES = {}
 
-        if "xticks" in self.styleParams:
-            plt.xticks(**self.styleParams["xticks"])
+        for style in styles:
 
-        if "yticks" in self.styleParams:
-            plt.yticks(**self.styleParams["yticks"])
+            STYLES[style] = importlib.import_module(f"skeleton.plots.styles.{style}").style  # type: ignore
 
-        plt.ylabel(self.y)
-        plt.xlabel(self.x)
+        return STYLES
 
     def add_note(
         self,
@@ -161,7 +176,7 @@ class graph:
         y: Optional[float] = None,
         category: Optional[str] = None,
         **kwargs: dict,
-    ) -> None:
+    ) -> plot:
 
         if text is None:
             raise ValueError("An input text is required")
@@ -228,6 +243,8 @@ class graph:
                 ]
             )
 
+        return self
+
     def _check_is_numeric(self, column: str) -> None:
         try:
             self.df[column].astype("float64")
@@ -253,6 +270,9 @@ class graph:
         if len(categories) <= 1:
             color = self.colors["1cat"]
             plt.plot(self.df[self.x], self.df[self.y], color=color, **self.style["line_style"])
+            plt.scatter(
+                self.df[self.x], self.df[self.y], color=color, **self.style["scatter_style"], marker="s"
+            )
 
         else:
             colors = self.colors["ncats"]
@@ -264,7 +284,12 @@ class graph:
                     x_axis = self.df[self.x][self.df[self.z] == category]
                     y_axis = self.df[self.y][self.df[self.z] == category]
 
-                    plt.plot(x_axis, y_axis, color=self.colors["grayed"], **self.style["lineshadow_style"])
+                    plt.plot(
+                        x_axis,
+                        y_axis,
+                        color=self.colors["grayed"],
+                        **self.style["lineshadow_style"],
+                    )
 
             for i, category in enumerate(self.main_categories):
 
@@ -277,6 +302,27 @@ class graph:
                 y_axis = self.df[self.y][self.df[self.z] == category]
 
                 plt.plot(x_axis, y_axis, color=color, **self.style["line_style"])
+                plt.scatter(x_axis, y_axis, color=color, **self.style["scatter_style"])
+
+        plt.ylabel(**self.styleParams["ylabel"])
+        plt.xlabel(**self.styleParams["xlabel"])
+
+        # plt.title(**PARAMS["title"])
+
+        # Dirty Trick to extend the plot to the right in Jupyter notebooks
+        plt.text(1, 1.04, "t", transform=plt.gcf().transFigure, color=self.rcParams["figure.facecolor"])
+        plt.text(-0.05, -0.1, "t", transform=plt.gcf().transFigure, color=self.rcParams["figure.facecolor"])
+
+        # plt.text(-0.05, -0.05, "t", transform=plt.gcf().transFigure, color=self.rcParams["figure.facecolor"])
+
+        if "text" in self.styleParams["title"]:
+            plt.annotate(**self.styleParams["title"])
+
+        if "text" in self.styleParams["subtitle"]:
+            plt.annotate(**self.styleParams["subtitle"])
+
+        plt.xticks(**self.styleParams["xticks"])
+        plt.yticks(**self.styleParams["yticks"])
 
         plt.show()
 
@@ -332,60 +378,3 @@ class graph:
 #         self.add_plot_style()
 
 #         plt.show()
-
-
-# class base_lineplot(graph):
-#     def show(self) -> None:
-
-#         plt.rcParams.update(self.rcParams)
-
-#         if self.z != "":
-#             categories = self.df[self.z].unique().tolist()
-#             if len(categories) == 0:
-#                 raise ValueError("No categories found: Length of categories is 0")
-#         else:
-#             categories = []
-
-
-#         if len(categories) <= 1:
-#             color = self.colors["1cat"]
-#             plt.plot(self.df[self.x], self.df[self.y], color=color, **self.style["line_style"])
-
-#         else:
-#             colors = self.colors["ncats"]
-
-#             for category in categories:
-
-#                 if category not in self.main_categories:
-
-#                     x_axis = self.df[self.x][self.df[self.z] == category]
-#                     y_axis = self.df[self.y][self.df[self.z] == category]
-
-#                     plt.plot(x_axis, y_axis, color=self.colors["grayed"], **self.style["lineshadow_style"])
-
-#             for i, category in enumerate(self.main_categories):
-
-#                 if len(self.main_categories) == 1:
-#                     color = self.colors["1cat"]
-#                 else:
-#                     color = colors[i % len(colors)]
-
-#                 x_axis = self.df[self.x][self.df[self.z] == category]
-#                 y_axis = self.df[self.y][self.df[self.z] == category]
-
-#                 plt.plot(x_axis, y_axis, color=color, **self.style["line_style"])
-
-#         for note, kwargs in self.notes:
-
-#             plt.annotate(**note, **kwargs)
-
-#         self._apply_style()
-
-#         plt.show()
-
-
-# class base_scatter(graph):
-
-
-class plot(graph):
-    ...

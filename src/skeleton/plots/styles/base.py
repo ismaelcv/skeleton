@@ -47,13 +47,15 @@ style = {
     "styleParams": {
         "xticks": {"rotation": 45, "fontsize": 13, "fontweight": "normal"},
         "yticks": {"fontsize": 15, "fontweight": "normal"},
-        "title_style": {
+        "ylabel": {},
+        "xlabel": {},
+        "title": {
             "fontsize": 24,
             "fontweight": "bold",
             "xy": (0.00, 1.12),
             "xycoords": "axes fraction",
         },
-        "subtitle_style": {
+        "subtitle": {
             "fontsize": 19,
             "color": "#696969",
             "xy": (0.00, 1.05),

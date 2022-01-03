@@ -47,6 +47,8 @@ style = {
     "styleParams": {
         "xticks": {"rotation": 45, "fontsize": 13, "fontweight": "normal"},
         "yticks": {"fontsize": 15, "fontweight": "normal"},
+        "ylabel": {},
+        "xlabel": {},
         "title_style": {
             "fontsize": 24,
             "fontweight": "bold",

@@ -20,6 +20,7 @@ disable = [
 	"E0401",
      "too-many-locals",
      "R1729",
+     "R0201",
      "too-many-instance-attributes",
 ]
 
