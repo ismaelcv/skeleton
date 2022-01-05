@@ -1,5 +1,7 @@
 from skeleton.plots.colors import plt_tab_colors
 
+MAIN_FONT = "Dejavu Sans"
+
 style = {
     "rcParams": {
         # Background color
@@ -10,9 +12,9 @@ style = {
         "axes.labelsize": 20,
         "axes.labelpad": 23,
         # XY line axis color
-        "axes.edgecolor": "black",
+        "axes.edgecolor": "gray",
         # XY line width
-        "axes.linewidth": 2,
+        "axes.linewidth": 1,
         # XY line remove top/right
         "axes.spines.right": False,
         "axes.spines.top": False,
@@ -26,8 +28,7 @@ style = {
         # Y grid
         "grid.color": "lightgray",
         "grid.alpha": 0.3,
-        "axes.grid": True,
-        "axes.grid.axis": "y",
+        "axes.grid": False,
         # Savefig properties
         "savefig.facecolor": "white",
         "savefig.edgecolor": "white",
@@ -45,21 +46,29 @@ style = {
         "s": 40,
     },
     "styleParams": {
-        "xticks": {"rotation": 45, "fontsize": 13, "fontweight": "normal"},
-        "yticks": {"fontsize": 15, "fontweight": "normal"},
-        "ylabel": {},
-        "xlabel": {},
+        "xticks": {"fontsize": 11, "fontname": MAIN_FONT},
+        "yticks": {"fontsize": 11, "fontname": MAIN_FONT},
+        "ylabel": {
+            "fontsize": 15,
+            "fontname": MAIN_FONT,
+        },
+        "xlabel": {
+            "fontsize": 15,
+            "fontname": MAIN_FONT,
+        },
         "title": {
-            "fontsize": 24,
+            "fontsize": 16,
             "fontweight": "bold",
             "xy": (0.00, 1.12),
             "xycoords": "axes fraction",
+            "fontname": MAIN_FONT,
         },
         "subtitle": {
-            "fontsize": 19,
+            "fontsize": 14,
             "color": "#696969",
-            "xy": (0.00, 1.05),
+            "xy": (0.00, 1.08),
             "xycoords": "axes fraction",
+            "fontname": MAIN_FONT,
         },
     },
     "colors": {"1cat": "tab:blue", "ncats": plt_tab_colors, "grayed": "lightgray"},
