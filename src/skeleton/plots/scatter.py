@@ -151,7 +151,7 @@ class plot:
 
     def set_subtitle(self, subtitle: str) -> plot:
         self.styleParams["subtitle"]["text"] = subtitle
-        self.styleParams["title"]["xy"] = (0.00, 1.16)
+        self.styleParams["title"]["xy"] = (0.00, self.styleParams["title"]["xy"][1] + 0.05)
 
         return self
 
@@ -338,7 +338,7 @@ class plot:
         # plt.title(**PARAMS["title"])
 
         # Dirty Trick to extend the plot to the right in Jupyter notebooks
-        plt.text(1, 1.04, "t", transform=plt.gcf().transFigure, color=self.rcParams["figure.facecolor"])
+        plt.text(1, 1.09, "t", transform=plt.gcf().transFigure, color=self.rcParams["figure.facecolor"])
         plt.text(-0.05, -0.1, "t", transform=plt.gcf().transFigure, color=self.rcParams["figure.facecolor"])
 
         if "text" in self.styleParams["title"]:

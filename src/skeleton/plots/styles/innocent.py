@@ -51,19 +51,19 @@ style = {
     "styleParams": {
         "xticks": {"fontsize": 13, "fontweight": "normal", "fontname": MAIN_FONT},
         "yticks": {"fontsize": 13, "fontweight": "normal", "fontname": MAIN_FONT},
-        "ylabel": {"fontsize": 17, "fontname": MAIN_FONT},
-        "xlabel": {"fontsize": 17, "fontname": MAIN_FONT},
+        "ylabel": {"fontsize": 17, "fontname": MAIN_FONT, "labelpad": 14},
+        "xlabel": {"fontsize": 17, "fontname": MAIN_FONT, "labelpad": 14},
         "title": {
             "fontsize": 20,
             "fontweight": "bold",
-            "xy": (0.00, 1.10),
+            "xy": (0.00, 1.12),
             "xycoords": "axes fraction",
             "fontname": MAIN_FONT,
         },
         "subtitle": {
             "fontsize": 16,
             "color": "#696969",
-            "xy": (0.00, 1.07),
+            "xy": (0.00, 1.09),
             "xycoords": "axes fraction",
             "fontname": "monofur for powerline",
         },

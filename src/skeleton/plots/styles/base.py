@@ -1,6 +1,6 @@
 from skeleton.plots.colors import plt_tab_colors
 
-MAIN_FONT = "Dejavu Sans"
+MAIN_FONT = "Roboto mono for powerline"
 
 style = {
     "rcParams": {
@@ -49,24 +49,28 @@ style = {
         "xticks": {"fontsize": 11, "fontname": MAIN_FONT},
         "yticks": {"fontsize": 11, "fontname": MAIN_FONT},
         "ylabel": {
-            "fontsize": 15,
+            "fontsize": 13,
             "fontname": MAIN_FONT,
+            "fontweight": "bold",
+            "labelpad": 14,
         },
         "xlabel": {
-            "fontsize": 15,
+            "fontsize": 13,
             "fontname": MAIN_FONT,
+            "labelpad": 14,
+            "fontweight": "bold",
         },
         "title": {
             "fontsize": 16,
             "fontweight": "bold",
-            "xy": (0.00, 1.12),
+            "xy": (0.00, 1.11),
             "xycoords": "axes fraction",
             "fontname": MAIN_FONT,
         },
         "subtitle": {
-            "fontsize": 14,
+            "fontsize": 12,
             "color": "#696969",
-            "xy": (0.00, 1.08),
+            "xy": (0.00, 1.09),
             "xycoords": "axes fraction",
             "fontname": MAIN_FONT,
         },

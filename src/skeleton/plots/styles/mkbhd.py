@@ -12,20 +12,20 @@ style = {
         # XY line axis color
         "axes.edgecolor": "white",
         # XY line width
-        "axes.linewidth": 4,
+        "axes.linewidth": 3,
         # XY line remove top/right
         "axes.spines.right": False,
         "axes.spines.top": False,
         # Change xy axis color
         "xtick.color": "white",
         "ytick.color": "white",
-        "xtick.major.size": 10,
-        "xtick.major.width": 3,
-        "ytick.major.size": 10,
-        "ytick.major.width": 3,
+        "xtick.major.size": 6,
+        "xtick.major.width": 2,
+        "ytick.major.size": 6,
+        "ytick.major.width": 2,
         # Y grid
         "grid.color": "lightgray",
-        "grid.alpha": 0.4,
+        "grid.alpha": 0.2,
         "axes.grid": True,
         "axes.grid.axis": "y",
         # Savefig properties
@@ -33,33 +33,41 @@ style = {
         "savefig.edgecolor": "black",
     },
     "scatter_style": {
-        "s": 40,
+        "s": 30,
     },
     "line_style": {
         "linewidth": 1.5,
     },
     "scattershadow_style": {
-        "s": 40,
+        "s": 30,
     },
     "lineshadow_style": {
         "linewidth": 1,
     },
     "styleParams": {
-        "xticks": {"rotation": 45, "fontsize": 13, "fontweight": "bold"},
-        "yticks": {"fontsize": 15, "fontweight": "bold"},
-        "ylabel": {},
-        "xlabel": {},
+        "xticks": {"fontsize": 11, "fontweight": "bold"},
+        "yticks": {"fontsize": 11, "fontweight": "bold"},
+        "ylabel": {
+            "fontsize": 15,
+            "fontweight": "bold",
+            "labelpad": 14,
+        },
+        "xlabel": {
+            "fontsize": 15,
+            "fontweight": "bold",
+            "labelpad": 14,
+        },
         "title": {
-            "fontsize": 24,
+            "fontsize": 19,
             "color": "white",
             "fontweight": "bold",
-            "xy": (0.00, 1.11),
+            "xy": (0.00, 1.113),
             "xycoords": "axes fraction",
         },
         "subtitle": {
             "color": "red",
-            "fontsize": 20,
-            "xy": (0.00, 1.05),
+            "fontsize": 16,
+            "xy": (0.00, 1.085),
             "xycoords": "axes fraction",
         },
     },
